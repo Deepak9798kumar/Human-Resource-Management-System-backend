@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr, Field
-from pydantic import field_validator
+from pydantic import BaseModel, EmailStr, Field, validator
 from typing import List, Optional
 from datetime import date, datetime
 from enum import Enum
@@ -90,19 +89,19 @@ class EmployeeCreate(BaseModel):
     email: EmailStr
     department: str = Field(..., min_length=1, max_length=100)
     
-    @field_validator('employee_id')
+    @validator('employee_id')
     def validate_employee_id(cls, v):
         if not isinstance(v, str) or not v.strip():
             raise ValueError('Employee ID cannot be empty')
         return v.strip()
 
-    @field_validator('full_name')
+    @validator('full_name')
     def validate_full_name(cls, v):
         if not isinstance(v, str) or not v.strip():
             raise ValueError('Full name cannot be empty')
         return v.strip()
 
-    @field_validator('department')
+    @validator('department')
     def validate_department(cls, v):
         if not isinstance(v, str) or not v.strip():
             raise ValueError('Department cannot be empty')
@@ -120,7 +119,7 @@ class AttendanceCreate(BaseModel):
     date: date
     status: AttendanceStatus
     
-    @field_validator('date')
+    @validator('date')
     def validate_date(cls, v):
         if v > date.today():
             raise ValueError('Cannot mark attendance for future dates')

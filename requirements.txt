@@ -1,7 +1,6 @@
-fastapi==0.109.0
+fastapi==0.95.2
 uvicorn[standard]==0.27.0
-# Use plain pydantic and install email-validator separately to avoid building
-# pydantic extras which can pull in packages that require a Rust toolchain
-pydantic==2.5.3
+# Use pydantic v1 to avoid pydantic-core Rust builds on hosts without toolchain
+pydantic==1.10.12
 email-validator==1.3.1
 python-multipart==0.0.6
