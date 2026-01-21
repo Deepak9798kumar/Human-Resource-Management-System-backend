@@ -3,5 +3,5 @@ services:
     name: hrms-backend
     env: docker
     plan: free
-    dockerfilePath: backend/Dockerfile
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    dockerfilePath: ./Dockerfile
+    startCommand: gunicorn hrms.wsgi:application --bind 0.0.0.0:$PORT --workers 2
