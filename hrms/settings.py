@@ -62,12 +62,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'hrms.wsgi.application'
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'hrms.db',
+# Use PostgreSQL in production if DATABASE_URL is set, else fallback to SQLite
+import dj_database_url
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'hrms.db',
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
