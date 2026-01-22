@@ -26,7 +26,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
-    employee_id = serializers.CharField(write_only=True)
+    employee_id = serializers.CharField()
     employee_name = serializers.CharField(source='employee.full_name', read_only=True)
     employee_department = serializers.CharField(source='employee.department', read_only=True)
 
